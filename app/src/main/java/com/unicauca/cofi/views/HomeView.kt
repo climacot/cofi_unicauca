@@ -13,12 +13,14 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeView(onLogout: () -> Unit) {
+fun HomeView(
+    onLogout: () -> Unit,
+    goToRegister: () -> Unit
+) {
     Scaffold(
         topBar = {
             TopAppBar(
@@ -30,7 +32,8 @@ fun HomeView(onLogout: () -> Unit) {
         content = { paddingValues ->
             Content(
                 paddingValues = paddingValues,
-                onLogout = onLogout
+                onLogout = onLogout,
+                goToRegister = goToRegister
             )
         },
         bottomBar = {
@@ -46,18 +49,19 @@ fun HomeView(onLogout: () -> Unit) {
 }
 
 @Composable
-fun Content(paddingValues: PaddingValues, onLogout: () -> Unit) {
+fun Content(
+    paddingValues: PaddingValues,
+    onLogout: () -> Unit, goToRegister: () -> Unit
+) {
     Column(
         modifier = Modifier.padding(paddingValues)
     ) {
         Button(onClick = onLogout) {
             Text(text = "Cerrar sesión")
+
+        }
+        Button(onClick = goToRegister) {
+            Text(text = "Registrar kilos recolectados")
         }
     }
-}
-
-@Preview
-@Composable
-fun HomePreview() {
-    HomeView(onLogout = {})
 }

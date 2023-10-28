@@ -6,11 +6,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 
 @Composable
-fun FirstLandingView(goToSecondLanding: () -> Unit) {
+fun RegisterView(onBack: () -> Unit) {
     Column {
-        Text(text = "Ahorra tiempo calculando automáticamente el pago de tus trabajadores.")
-        Button(onClick = goToSecondLanding) {
-            Text("Continuar")
+        Button(onClick = onBack) {
+            Text(text = "Cancelar")
         }
     }
 }

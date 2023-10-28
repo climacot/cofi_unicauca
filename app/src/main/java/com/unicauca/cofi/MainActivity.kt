@@ -6,10 +6,8 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -18,6 +16,7 @@ import com.unicauca.cofi.ui.theme.CofiTheme
 import com.unicauca.cofi.views.FirstLandingView
 import com.unicauca.cofi.views.HomeView
 import com.unicauca.cofi.views.LoginView
+import com.unicauca.cofi.views.RegisterView
 import com.unicauca.cofi.views.SecondLandingView
 
 class MainActivity : ComponentActivity() {
@@ -75,26 +74,20 @@ fun App(
         }
         composable("home") {
             HomeView(
+                goToRegister = {
+                    navController.navigate("register")
+                },
                 onLogout = {
                     navController.popBackStack()
                 }
             )
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    CofiTheme {
-        Greeting("Android")
+        composable("register") {
+            RegisterView(
+                onBack = {
+                    navController.popBackStack()
+                }
+            )
+        }
     }
 }
