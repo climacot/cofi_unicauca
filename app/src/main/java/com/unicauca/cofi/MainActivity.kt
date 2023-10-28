@@ -10,11 +10,20 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.unicauca.cofi.ui.theme.CofiTheme
+import com.unicauca.cofi.views.FirstLandingView
+import com.unicauca.cofi.views.HomeView
+import com.unicauca.cofi.views.LoginView
+import com.unicauca.cofi.views.SecondLandingView
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContent {
             CofiTheme {
                 // A surface container using the 'background' color from the theme
@@ -22,9 +31,54 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Greeting("Android")
+                    App()
                 }
             }
+        }
+    }
+}
+
+@Composable
+fun App(
+    modifier: Modifier = Modifier,
+    navController: NavHostController = rememberNavController(),
+    startDestination: String = "first_landing"
+) {
+    NavHost(
+        modifier = modifier,
+        navController = navController,
+        startDestination = startDestination
+    ) {
+        composable("first_landing") {
+            FirstLandingView(
+                goToSecondLanding = {
+                    navController.navigate("second_landing")
+                }
+            )
+        }
+        composable("second_landing") {
+            SecondLandingView(
+                goBack = {
+                    navController.popBackStack()
+                },
+                goToLogin = {
+                    navController.navigate("login")
+                }
+            )
+        }
+        composable("login") {
+            LoginView(
+                onLogin = {
+                    navController.navigate("home")
+                }
+            )
+        }
+        composable("home") {
+            HomeView(
+                onLogout = {
+                    navController.popBackStack()
+                }
+            )
         }
     }
 }
