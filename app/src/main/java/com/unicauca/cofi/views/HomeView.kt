@@ -1,27 +1,36 @@
 package com.unicauca.cofi.views
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.AccountCircle
 import androidx.compose.material.icons.outlined.CheckCircle
+import androidx.compose.material.icons.outlined.Edit
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.Menu
 import androidx.compose.material3.BottomAppBar
-import androidx.compose.material3.Button
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarColors
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -36,91 +45,108 @@ fun HomeView(
     onLogout: () -> Unit,
     goToRegister: () -> Unit
 ) {
-    Scaffold(
-        topBar = {
-            CenterAlignedTopAppBar(
-                title = {
-                    Image(
-                        painter = painterResource(id = R.drawable.cofi_appbar),
-                        contentDescription = "Logo cofi"
-                    )
-                },
-                navigationIcon = {
-                    IconButton(onClick = {}) {
-                        Icon(
-                            imageVector = Icons.Outlined.Menu,
-                            contentDescription = "Localized description"
+    Box(
+        modifier = Modifier.fillMaxSize()
+    ) {
+        Image(
+            painter = painterResource(id = R.drawable.background),
+            contentDescription = "Background wallpaper",
+            contentScale = ContentScale.FillBounds,
+            modifier = Modifier.fillMaxWidth()
+        )
+        Scaffold(
+            modifier = Modifier.fillMaxSize(),
+            containerColor = Color.Transparent,
+            topBar = {
+                CenterAlignedTopAppBar(
+                    colors = TopAppBarDefaults.topAppBarColors(
+                        containerColor = Color.Transparent
+                    ),
+                    title = {
+                        Image(
+                            painter = painterResource(id = R.drawable.cofi_appbar),
+                            contentDescription = "Logo cofi"
                         )
-                    }
-                },
-                actions = {
-                    IconButton(onClick = {}) {
-                        Icon(
-                            imageVector = Icons.Outlined.AccountCircle,
-                            contentDescription = "Localized description"
-                        )
-                    }
-                },
-            )
-        },
-        content = { paddingValues ->
-            Content(
-                paddingValues = paddingValues,
-                onLogout = onLogout,
-                goToRegister = goToRegister
-            )
-        },
-        bottomBar = {
-            BottomAppBar(
-                modifier = Modifier.fillMaxWidth(),
-                contentPadding = PaddingValues(
-                    horizontal = 50.dp
+                    },
+                    navigationIcon = {
+                        IconButton(onClick = {}) {
+                            Icon(
+                                imageVector = Icons.Outlined.Menu,
+                                contentDescription = "Localized description"
+                            )
+                        }
+                    },
+                    actions = {
+                        IconButton(onClick = onLogout) {
+                            Icon(
+                                imageVector = Icons.Outlined.AccountCircle,
+                                contentDescription = "Localized description"
+                            )
+                        }
+                    },
                 )
-            ) {
-                IconButton(onClick = {}) {
-                    Icon(
-                        Icons.Outlined.Home,
-                        contentDescription = "Ir a inicio"
+            },
+            content = { paddingValues ->
+                Content(
+                    paddingValues = paddingValues
+                )
+            },
+            bottomBar = {
+                BottomAppBar(
+                    modifier = Modifier.fillMaxWidth(),
+                    contentPadding = PaddingValues(
+                        horizontal = 50.dp
                     )
+                ) {
+                    IconButton(onClick = {}) {
+                        Icon(
+                            Icons.Outlined.Home,
+                            contentDescription = "Ir a inicio"
+                        )
+                    }
+                    Spacer(modifier = Modifier.weight(1f))
+                    IconButton(onClick = {}) {
+                        Icon(
+                            Icons.Outlined.Info,
+                            contentDescription = "Ir a finanzas"
+                        )
+                    }
+                    Spacer(modifier = Modifier.weight(1f))
+                    IconButton(onClick = {}) {
+                        Icon(
+                            Icons.Outlined.CheckCircle,
+                            contentDescription = "Ir a comercio"
+                        )
+                    }
                 }
-                Spacer(modifier = Modifier.weight(1f))
-                IconButton(onClick = {}) {
+            },
+            floatingActionButton = {
+                FloatingActionButton(onClick = goToRegister) {
                     Icon(
-                        Icons.Outlined.Info,
-                        contentDescription = "Ir a inicio"
-                    )
-                }
-                Spacer(modifier = Modifier.weight(1f))
-                IconButton(onClick = {}) {
-                    Icon(
-                        Icons.Outlined.CheckCircle,
-                        contentDescription = "Ir a inicio"
+                        Icons.Outlined.Edit,
+                        contentDescription = "Agregar trabajador o registrar kilos recolectados"
                     )
                 }
             }
-        },
-    )
+        )
+    }
 }
 
 @Composable
 fun Content(
     paddingValues: PaddingValues,
-    onLogout: () -> Unit, goToRegister: () -> Unit
 ) {
     Column(
-        modifier = Modifier.padding(paddingValues)
+        modifier = Modifier.padding(paddingValues),
     ) {
-        Text(
-            text = "Mi finca",
-            fontSize = 22.sp,
-            fontWeight = FontWeight.Normal
-        )
-        Button(onClick = onLogout) {
-            Text(text = "Cerrar sesión")
-
-        }
-        Button(onClick = goToRegister) {
-            Text(text = "Registrar kilos recolectados")
+        Column(
+            modifier = Modifier.padding(10.dp)
+        ) {
+            Text(
+                text = "Mi finca",
+                fontSize = 22.sp,
+                fontWeight = FontWeight.Normal
+            )
         }
     }
 }
