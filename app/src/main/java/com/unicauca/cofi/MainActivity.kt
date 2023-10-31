@@ -16,7 +16,7 @@ import com.unicauca.cofi.ui.theme.CofiTheme
 import com.unicauca.cofi.views.FirstLandingView
 import com.unicauca.cofi.views.HomeView
 import com.unicauca.cofi.views.LoginView
-import com.unicauca.cofi.views.RegisterView
+import com.unicauca.cofi.views.register.RegisterView
 import com.unicauca.cofi.views.SecondLandingView
 
 class MainActivity : ComponentActivity() {

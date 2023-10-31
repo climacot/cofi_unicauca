@@ -1,7 +1,6 @@
 package com.unicauca.cofi.views
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -23,11 +22,10 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBarColors
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
@@ -98,25 +96,34 @@ fun HomeView(
                         horizontal = 50.dp
                     )
                 ) {
-                    IconButton(onClick = {}) {
-                        Icon(
-                            Icons.Outlined.Home,
-                            contentDescription = "Ir a inicio"
-                        )
+                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                        IconButton(onClick = {}) {
+                            Icon(
+                                Icons.Outlined.Home,
+                                contentDescription = "Ir a inicio"
+                            )
+                        }
+                        Text(text = "Inicio")
                     }
                     Spacer(modifier = Modifier.weight(1f))
-                    IconButton(onClick = {}) {
-                        Icon(
-                            Icons.Outlined.Info,
-                            contentDescription = "Ir a finanzas"
-                        )
+                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                        IconButton(onClick = {}) {
+                            Icon(
+                                Icons.Outlined.Info,
+                                contentDescription = "Ir a finanzas"
+                            )
+                        }
+                        Text(text = "Finanzas")
                     }
                     Spacer(modifier = Modifier.weight(1f))
-                    IconButton(onClick = {}) {
-                        Icon(
-                            Icons.Outlined.CheckCircle,
-                            contentDescription = "Ir a comercio"
-                        )
+                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                        IconButton(onClick = {}) {
+                            Icon(
+                                Icons.Outlined.CheckCircle,
+                                contentDescription = "Ir a comercio"
+                            )
+                        }
+                        Text(text = "Comercio")
                     }
                 }
             },
