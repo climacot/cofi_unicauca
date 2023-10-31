@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "725408512916",
+    "project_id": "cofi-ff547",
+    "storage_bucket": "cofi-ff547.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:725408512916:android:a208c8db3cb04a304aed81",
+        "android_client_info": {
+          "package_name": "com.unicauca.cofi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "725408512916-7ult2fo96ijrsliqol8p7m8q03ctv62t.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.unicauca.cofi",
+            "certificate_hash": "2f55366483323c668ebc05bda55ec7b221311820"
+          }
+        },
+        {
+          "client_id": "725408512916-7td9cf02ldl18o1vtk25d6crd6pacusq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDWK5EdbeoN3XIaH3mQ4vig3cBzHH2MS_w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "725408512916-7td9cf02ldl18o1vtk25d6crd6pacusq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
