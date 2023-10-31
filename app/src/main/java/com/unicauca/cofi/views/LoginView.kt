@@ -76,6 +76,5 @@ fun LoginView(onLogin: () -> Unit) {
 @Composable
 fun prevLogin() {
     LoginView {
-
     }
 }
