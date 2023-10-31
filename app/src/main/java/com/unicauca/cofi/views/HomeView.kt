@@ -40,8 +40,8 @@ import com.unicauca.cofi.R
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeView(
-    onLogout: () -> Unit,
-    goToRegister: () -> Unit
+    goToRegister: () -> Unit,
+    goToAccount: () -> Unit
 ) {
     Box(
         modifier = Modifier.fillMaxSize()
@@ -75,7 +75,7 @@ fun HomeView(
                         }
                     },
                     actions = {
-                        IconButton(onClick = onLogout) {
+                        IconButton(onClick = goToAccount) {
                             Icon(
                                 imageVector = Icons.Outlined.AccountCircle,
                                 contentDescription = "Localized description"
@@ -163,6 +163,6 @@ fun Content(
 fun HomePreview() {
     HomeView(
         goToRegister = {},
-        onLogout = {}
+        goToAccount = {}
     )
 }
