@@ -6,6 +6,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -14,19 +16,26 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Add
 import androidx.compose.material.icons.outlined.ArrowBack
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -104,10 +113,15 @@ fun getDateTime(): String {
     return date.toString()
 }
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun Content(
     paddingValues: PaddingValues
 ) {
+    var text by remember { mutableStateOf<String>("") }
+    var isVisible by remember { mutableStateOf<Boolean>(false) }
+    var kilos by remember { mutableStateOf<List<String>>(listOf("")) }
+
     Column(
         modifier = Modifier
             .fillMaxSize(1f)
@@ -137,7 +151,54 @@ fun Content(
                         modifier = Modifier.fillMaxWidth(1f)
                     )
                     Spacer(modifier = Modifier.height(10.dp))
-                    Text(text = "Anotar trabajador")
+                    Text(text = "Climaco Fernando Rodriguez Tovar")
+                    Spacer(modifier = Modifier.height(10.dp))
+                    FlowRow {
+                        kilos.map { kilo ->
+                            Text(text = kilo)
+                        }
+                        Spacer(modifier = Modifier.width(10.dp))
+                        if (isVisible) {
+                            BasicTextField(
+                                value = text,
+                                onValueChange = { value ->
+                                    text = value
+                                },
+                                modifier = Modifier
+                                    .border(
+                                        shape = RoundedCornerShape(5.dp),
+                                        border = BorderStroke(
+                                            width = 1.dp,
+                                            color = Color.Black
+                                        )
+                                    )
+                                    .padding(10.dp)
+                                    .clip(RoundedCornerShape(5.dp))
+                            )
+                        }
+                        Spacer(modifier = Modifier.width(5.dp))
+                        IconButton(
+                            onClick = {
+                                val newValue = !isVisible
+
+                                if (isVisible == false) {
+                                    val newList = listOf<String>(text)
+                                    val dd = newList + kilos
+                                    kilos = dd
+                                }
+
+                                isVisible = newValue
+                            },
+                            colors = IconButtonDefaults.filledIconButtonColors(
+                                contentColor = Color.White
+                            )
+                        ) {
+                            Icon(
+                                Icons.Outlined.Add,
+                                contentDescription = "add kilos",
+                            )
+                        }
+                    }
                     Spacer(modifier = Modifier.height(10.dp))
                     Button(
                         modifier = Modifier.fillMaxWidth(1f),
