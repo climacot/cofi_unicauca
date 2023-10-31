@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">cofi</string>
+    <string name="default_web_client_id">725408512916-7td9cf02ldl18o1vtk25d6crd6pacusq.apps.googleusercontent.com</string>
 </resources>
