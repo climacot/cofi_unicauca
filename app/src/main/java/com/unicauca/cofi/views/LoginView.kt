@@ -37,6 +37,7 @@ fun LoginView(onLogin: () -> Unit) {
             .background(bgColor),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
+
     ) {
         Box(Modifier.fillMaxWidth(), Alignment.Center) {
             Image(
