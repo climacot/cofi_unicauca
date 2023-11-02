@@ -183,6 +183,9 @@ fun App(
         composable("account") {
             AccountView(
                 user = user,
+                goToBack = {
+                    navController.popBackStack()
+                },
                 onSignOut = {
                     onSignOut()
                 }
