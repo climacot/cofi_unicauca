@@ -62,10 +62,13 @@ fun LoginView(onLogin: () -> Unit) {
                 onClick = onLogin,
                 shape = CircleShape,
                 modifier = Modifier.background(color = Color.White, shape = CircleShape),
-                border= BorderStroke(width = 2.dp, color = primaryColor),
+                border = BorderStroke(width = 2.dp, color = primaryColor),
                 contentPadding = PaddingValues(horizontal = 40.dp, vertical = 10.dp)
             ) {
-                Image(painter = painterResource(id = R.drawable.google_icon), contentDescription = "")
+                Image(
+                    painter = painterResource(id = R.drawable.google_icon),
+                    contentDescription = ""
+                )
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(text = "Iniciar con google", color = Color.Gray)
             }
@@ -76,6 +79,5 @@ fun LoginView(onLogin: () -> Unit) {
 @Preview
 @Composable
 fun prevLogin() {
-    LoginView {
-    }
+    LoginView(onLogin = {})
 }
