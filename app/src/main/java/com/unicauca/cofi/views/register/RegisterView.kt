@@ -17,6 +17,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Add
 import androidx.compose.material.icons.outlined.ArrowBack
@@ -36,11 +38,15 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -113,7 +119,7 @@ fun getDateTime(): String {
     return date.toString()
 }
 
-@OptIn(ExperimentalLayoutApi::class)
+@OptIn(ExperimentalLayoutApi::class, ExperimentalComposeUiApi::class)
 @Composable
 fun Content(
     paddingValues: PaddingValues
@@ -145,6 +151,8 @@ fun Content(
                 Column(
                     modifier = Modifier.padding(10.dp)
                 ) {
+                    val focusRequester = remember { FocusRequester() }
+
                     Text(
                         text = getDateTime(),
                         textAlign = TextAlign.End,
@@ -153,17 +161,30 @@ fun Content(
                     Spacer(modifier = Modifier.height(10.dp))
                     Text(text = "Climaco Fernando Rodriguez Tovar")
                     Spacer(modifier = Modifier.height(10.dp))
-                    FlowRow {
+                    FlowRow(
+                        modifier = Modifier.padding(0.dp)
+                    ) {
                         kilos.map { kilo ->
                             Text(text = kilo)
                         }
-                        Spacer(modifier = Modifier.width(10.dp))
+
                         if (isVisible) {
+                            Spacer(modifier = Modifier.width(10.dp))
                             BasicTextField(
                                 value = text,
                                 onValueChange = { value ->
                                     text = value
                                 },
+                                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+                                keyboardActions = KeyboardActions(
+                                    onDone = {
+                                        val newList = listOf<String>(text)
+                                        val dd = newList + kilos
+                                        isVisible = false
+                                        text = ""
+                                        kilos = dd
+                                    }
+                                ),
                                 modifier = Modifier
                                     .border(
                                         shape = RoundedCornerShape(5.dp),
@@ -174,20 +195,13 @@ fun Content(
                                     )
                                     .padding(10.dp)
                                     .clip(RoundedCornerShape(5.dp))
+                                    .focusRequester(focusRequester)
                             )
                         }
                         Spacer(modifier = Modifier.width(5.dp))
                         IconButton(
                             onClick = {
-                                val newValue = !isVisible
-
-                                if (isVisible == false) {
-                                    val newList = listOf<String>(text)
-                                    val dd = newList + kilos
-                                    kilos = dd
-                                }
-
-                                isVisible = newValue
+                                isVisible = !isVisible
                             },
                             colors = IconButtonDefaults.filledIconButtonColors(
                                 contentColor = Color.White
