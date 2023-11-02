@@ -1,14 +1,17 @@
 package com.unicauca.cofi.views.register
 
+import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -38,18 +41,17 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.google.firebase.firestore.FieldValue
+import com.google.firebase.firestore.FirebaseFirestore
 import com.unicauca.cofi.R
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -57,7 +59,10 @@ import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun RegisterView(onBack: () -> Unit) {
+fun RegisterView(
+    onBack: () -> Unit,
+    db: FirebaseFirestore
+) {
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
@@ -79,7 +84,7 @@ fun RegisterView(onBack: () -> Unit) {
                         Text(text = "La loma")
                     },
                     navigationIcon = {
-                        IconButton(onClick = {}) {
+                        IconButton(onClick = onBack) {
                             Icon(
                                 imageVector = Icons.Outlined.ArrowBack,
                                 contentDescription = "Go to back"
@@ -90,6 +95,7 @@ fun RegisterView(onBack: () -> Unit) {
             },
             content = { paddingValues ->
                 Content(
+                    db = db,
                     paddingValues = paddingValues
                 )
             },
@@ -119,14 +125,32 @@ fun getDateTime(): String {
     return date.toString()
 }
 
-@OptIn(ExperimentalLayoutApi::class, ExperimentalComposeUiApi::class)
+
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun Content(
+    db: FirebaseFirestore,
     paddingValues: PaddingValues
 ) {
     var text by remember { mutableStateOf<String>("") }
     var isVisible by remember { mutableStateOf<Boolean>(false) }
     var kilos by remember { mutableStateOf<List<String>>(listOf("")) }
+
+    db
+        .collection("fincas")
+        .document("iod0HBQZYSWpKv1se0HD")
+        .get()
+        .addOnSuccessListener { document ->
+            if (document != null) {
+                Log.d("TAG", "DocumentSnapshot data: ${document.data}")
+                kilos = document.data?.get("kilos") as List<String>
+            } else {
+                Log.d("TAG", "No such document")
+            }
+        }
+        .addOnFailureListener { exception ->
+            Log.d("TAG", "get failed with ", exception)
+        }
 
     Column(
         modifier = Modifier
@@ -151,8 +175,6 @@ fun Content(
                 Column(
                     modifier = Modifier.padding(10.dp)
                 ) {
-                    val focusRequester = remember { FocusRequester() }
-
                     Text(
                         text = getDateTime(),
                         textAlign = TextAlign.End,
@@ -162,55 +184,66 @@ fun Content(
                     Text(text = "Climaco Fernando Rodriguez Tovar")
                     Spacer(modifier = Modifier.height(10.dp))
                     FlowRow(
-                        modifier = Modifier.padding(0.dp)
+                        modifier = Modifier.padding(0.dp),
+                        verticalArrangement = Arrangement.Center
                     ) {
                         kilos.map { kilo ->
-                            Text(text = kilo)
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Text(text = "$kilo + ")
+                            }
                         }
-
-                        if (isVisible) {
-                            Spacer(modifier = Modifier.width(10.dp))
-                            BasicTextField(
-                                value = text,
-                                onValueChange = { value ->
-                                    text = value
-                                },
-                                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
-                                keyboardActions = KeyboardActions(
-                                    onDone = {
-                                        val newList = listOf<String>(text)
-                                        val dd = newList + kilos
-                                        isVisible = false
-                                        text = ""
-                                        kilos = dd
-                                    }
-                                ),
-                                modifier = Modifier
-                                    .border(
-                                        shape = RoundedCornerShape(5.dp),
-                                        border = BorderStroke(
-                                            width = 1.dp,
-                                            color = Color.Black
-                                        )
-                                    )
-                                    .padding(10.dp)
-                                    .clip(RoundedCornerShape(5.dp))
-                                    .focusRequester(focusRequester)
-                            )
-                        }
-                        Spacer(modifier = Modifier.width(5.dp))
-                        IconButton(
-                            onClick = {
-                                isVisible = !isVisible
-                            },
-                            colors = IconButtonDefaults.filledIconButtonColors(
-                                contentColor = Color.White
-                            )
+                        Spacer(modifier = Modifier.width(10.dp))
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically
                         ) {
-                            Icon(
-                                Icons.Outlined.Add,
-                                contentDescription = "add kilos",
-                            )
+                            if (isVisible) {
+                                BasicTextField(
+                                    value = text,
+                                    onValueChange = { value ->
+                                        text = value
+                                    },
+                                    keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+                                    keyboardActions = KeyboardActions(
+                                        onDone = {
+                                            val newList = listOf<String>(text)
+                                            val dd = kilos + newList
+                                            isVisible = false
+                                            kilos = dd
+                                            db
+                                                .collection("fincas")
+                                                .document("iod0HBQZYSWpKv1se0HD")
+                                                .update("kilos", FieldValue.arrayUnion(text))
+                                            text = ""
+                                        }
+                                    ),
+                                    modifier = Modifier
+                                        .border(
+                                            shape = RoundedCornerShape(5.dp),
+                                            border = BorderStroke(
+                                                width = 1.dp,
+                                                color = Color.Black
+                                            )
+                                        )
+                                        .padding(10.dp)
+                                        .clip(RoundedCornerShape(5.dp))
+                                )
+                            }
+                            Spacer(modifier = Modifier.width(5.dp))
+                            IconButton(
+                                onClick = {
+                                    isVisible = !isVisible
+                                },
+                                colors = IconButtonDefaults.filledIconButtonColors(
+                                    contentColor = Color.White
+                                )
+                            ) {
+                                Icon(
+                                    Icons.Outlined.Add,
+                                    contentDescription = "add kilos",
+                                )
+                            }
                         }
                     }
                     Spacer(modifier = Modifier.height(10.dp))
@@ -224,10 +257,4 @@ fun Content(
             }
         }
     }
-}
-
-@Preview
-@Composable
-fun RegisterPreview() {
-    RegisterView(onBack = {})
 }

@@ -14,11 +14,27 @@
       },
       "oauth_client": [
         {
+          "client_id": "725408512916-4mmijht4ile8d21i2lu293airveb4mo0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.unicauca.cofi",
+            "certificate_hash": "1d29f6b60b4e6ae2a4983c27775a8e6bf955154e"
+          }
+        },
+        {
           "client_id": "725408512916-7ult2fo96ijrsliqol8p7m8q03ctv62t.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.unicauca.cofi",
             "certificate_hash": "2f55366483323c668ebc05bda55ec7b221311820"
+          }
+        },
+        {
+          "client_id": "725408512916-uebk1tqulskctfa473m0i3s1p0ofo7su.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.unicauca.cofi",
+            "certificate_hash": "8a0d87cc9013a22ffdab0a82333f410e0fa9194f"
           }
         },
         {

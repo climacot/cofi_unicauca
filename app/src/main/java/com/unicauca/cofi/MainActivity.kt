@@ -22,6 +22,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.unicauca.cofi.ui.theme.CofiTheme
 import com.unicauca.cofi.views.AccountView
@@ -33,6 +35,7 @@ import com.unicauca.cofi.views.register.RegisterView
 
 class MainActivity : ComponentActivity() {
     private lateinit var auth: FirebaseAuth
+    private lateinit var db: FirebaseFirestore
     private lateinit var googleSignInClient: GoogleSignInClient
 
     companion object {
@@ -50,6 +53,7 @@ class MainActivity : ComponentActivity() {
 
         googleSignInClient = GoogleSignIn.getClient(this, gso)
         auth = Firebase.auth
+        db = Firebase.firestore
     }
 
     override fun onStart() {
@@ -110,6 +114,7 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     App(
+                        db = db,
                         user = user,
                         onSignOut = {
                             signOut()
@@ -130,7 +135,8 @@ fun App(
     navController: NavHostController = rememberNavController(),
     onSignInWithGoogle: () -> Unit,
     onSignOut: () -> Unit,
-    user: FirebaseUser?
+    user: FirebaseUser?,
+    db: FirebaseFirestore
 ) {
     val startDestination = if (user != null) "home" else "first_landing"
 
@@ -175,6 +181,7 @@ fun App(
         }
         composable("register") {
             RegisterView(
+                db = db,
                 onBack = {
                     navController.popBackStack()
                 }
