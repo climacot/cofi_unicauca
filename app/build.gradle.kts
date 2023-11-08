@@ -29,12 +29,6 @@ android {
     }
 
     signingConfigs {
-        getByName("debug") {
-            storeFile = file("C:\\Users\\fermt\\Documents\\Kotlin\\cofi\\app\\credentials.jks")
-            storePassword = "123456"
-            keyAlias = "key"
-            keyPassword = "123456"
-        }
         create("config") {
             keyAlias = keystoreProperties["keyAlias"] as String
             keyPassword = keystoreProperties["keyPassword"] as String
