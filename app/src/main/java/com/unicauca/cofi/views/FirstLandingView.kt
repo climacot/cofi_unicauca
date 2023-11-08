@@ -65,7 +65,7 @@ fun FirstLandingView(goToSecondLanding: () -> Unit) {
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    text = "Ahorra tiempo calculando automáticamente el pago de tus trabajadores.",
+                    text = "Ahorre tiempo calculando automáticamente el pago de sus trabajadores.",
                     fontSize = 16.sp,
                     textAlign = TextAlign.Center,
                     modifier = Modifier.width(240.dp)
