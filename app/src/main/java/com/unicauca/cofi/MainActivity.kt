@@ -31,6 +31,8 @@ import com.unicauca.cofi.views.FirstLandingView
 import com.unicauca.cofi.views.HomeView
 import com.unicauca.cofi.views.LoginView
 import com.unicauca.cofi.views.SecondLandingView
+import com.unicauca.cofi.views.about.AboutView
+import com.unicauca.cofi.views.finances.FinancasView
 import com.unicauca.cofi.views.register.RegisterView
 
 class MainActivity : ComponentActivity() {
@@ -176,6 +178,21 @@ fun App(
                 },
                 goToAccount = {
                     navController.navigate("account")
+                },
+                goToFinances = {
+                    navController.navigate("finances") {
+                        popUpTo(0)
+                    }
+                },
+                goToAbout = {
+                    navController.navigate("about") {
+                        popUpTo(0)
+                    }
+                },
+                goToHome = {
+                    navController.navigate("home") {
+                        popUpTo(0)
+                    }
                 }
             )
         }
@@ -195,6 +212,44 @@ fun App(
                 },
                 onSignOut = {
                     onSignOut()
+                }
+            )
+        }
+        composable("finances") {
+            FinancasView(
+                goToFinances = {
+                    navController.navigate("finances") {
+                        popUpTo(0)
+                    }
+                },
+                goToAbout = {
+                    navController.navigate("about") {
+                        popUpTo(0)
+                    }
+                },
+                goToHome = {
+                    navController.navigate("home") {
+                        popUpTo(0)
+                    }
+                }
+            )
+        }
+        composable("about") {
+            AboutView(
+                goToFinances = {
+                    navController.navigate("finances") {
+                        popUpTo(0)
+                    }
+                },
+                goToAbout = {
+                    navController.navigate("about") {
+                        popUpTo(0)
+                    }
+                },
+                goToHome = {
+                    navController.navigate("home") {
+                        popUpTo(0)
+                    }
                 }
             )
         }
