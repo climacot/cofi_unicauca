@@ -25,14 +25,19 @@ import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.Menu
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.ModalDrawerSheet
+import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -44,6 +49,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.unicauca.cofi.R
+import kotlinx.coroutines.launch
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -55,6 +61,9 @@ fun HomeView(
     goToFinances: () -> Unit,
     goToAbout: () -> Unit
 ) {
+    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+    val scope = rememberCoroutineScope()
+
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
@@ -64,88 +73,109 @@ fun HomeView(
             contentScale = ContentScale.FillBounds,
             modifier = Modifier.fillMaxWidth()
         )
-        Scaffold(
-            modifier = Modifier.fillMaxSize(),
-            containerColor = Color.Transparent,
-            topBar = {
-                CenterAlignedTopAppBar(
-                    colors = TopAppBarDefaults.topAppBarColors(
-                        containerColor = Color.Transparent
-                    ),
-                    title = {
-                        Image(
-                            painter = painterResource(id = R.drawable.cofi_appbar),
-                            contentDescription = "Logo cofi"
+        ModalNavigationDrawer(
+            drawerState = drawerState,
+            gesturesEnabled = true,
+            drawerContent = {
+                ModalDrawerSheet {
+                    Text(text = "Drawer content")
+                }
+            },
+            content = {
+                Scaffold(
+                    modifier = Modifier.fillMaxSize(),
+                    containerColor = Color.Transparent,
+                    topBar = {
+                        CenterAlignedTopAppBar(
+                            colors = TopAppBarDefaults.topAppBarColors(
+                                containerColor = Color.Transparent
+                            ),
+                            title = {
+                                Image(
+                                    painter = painterResource(id = R.drawable.cofi_appbar),
+                                    contentDescription = "Logo cofi"
+                                )
+                            },
+                            navigationIcon = {
+                                IconButton(onClick = {
+                                    scope.launch {
+                                        drawerState.apply {
+                                            if (isClosed) {
+                                                open()
+                                            } else {
+                                                close()
+                                            }
+                                        }
+                                    }
+                                }) {
+                                    Icon(
+                                        imageVector = Icons.Outlined.Menu,
+                                        contentDescription = "Localized description"
+                                    )
+                                }
+                            },
+                            actions = {
+                                IconButton(onClick = goToAccount) {
+                                    Icon(
+                                        imageVector = Icons.Outlined.AccountCircle,
+                                        contentDescription = "Localized description"
+                                    )
+                                }
+                            },
                         )
                     },
-                    navigationIcon = {
-                        IconButton(onClick = {}) {
-                            Icon(
-                                imageVector = Icons.Outlined.Menu,
-                                contentDescription = "Localized description"
+                    content = { paddingValues ->
+                        Content(
+                            paddingValues = paddingValues
+                        )
+                    },
+                    bottomBar = {
+                        BottomAppBar(
+                            modifier = Modifier.fillMaxWidth(),
+                            contentPadding = PaddingValues(
+                                horizontal = 50.dp
                             )
+                        ) {
+                            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                                IconButton(onClick = goToHome) {
+                                    Icon(
+                                        Icons.Outlined.Home,
+                                        contentDescription = "Ir a inicio"
+                                    )
+                                }
+                                Text(text = "Inicio")
+                            }
+                            Spacer(modifier = Modifier.weight(1f))
+                            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                                IconButton(onClick = goToFinances) {
+                                    Icon(
+                                        Icons.Outlined.Info,
+                                        contentDescription = "Ir a finanzas"
+                                    )
+                                }
+                                Text(text = "Finanzas")
+                            }
+                            Spacer(modifier = Modifier.weight(1f))
+                            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                                IconButton(onClick = goToAbout) {
+                                    Icon(
+                                        Icons.Outlined.CheckCircle,
+                                        contentDescription = "Ir a comercio"
+                                    )
+                                }
+                                Text(text = "Comercio")
+                            }
                         }
                     },
-                    actions = {
-                        IconButton(onClick = goToAccount) {
+                    floatingActionButton = {
+                        FloatingActionButton(onClick = goToRegister) {
                             Icon(
-                                imageVector = Icons.Outlined.AccountCircle,
-                                contentDescription = "Localized description"
+                                Icons.Outlined.Edit,
+                                contentDescription = "Agregar trabajador o registrar kilos recolectados"
                             )
                         }
-                    },
+                    }
                 )
-            },
-            content = { paddingValues ->
-                Content(
-                    paddingValues = paddingValues
-                )
-            },
-            bottomBar = {
-                BottomAppBar(
-                    modifier = Modifier.fillMaxWidth(),
-                    contentPadding = PaddingValues(
-                        horizontal = 50.dp
-                    )
-                ) {
-                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                        IconButton(onClick = goToHome) {
-                            Icon(
-                                Icons.Outlined.Home,
-                                contentDescription = "Ir a inicio"
-                            )
-                        }
-                        Text(text = "Inicio")
-                    }
-                    Spacer(modifier = Modifier.weight(1f))
-                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                        IconButton(onClick = goToFinances) {
-                            Icon(
-                                Icons.Outlined.Info,
-                                contentDescription = "Ir a finanzas"
-                            )
-                        }
-                        Text(text = "Finanzas")
-                    }
-                    Spacer(modifier = Modifier.weight(1f))
-                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                        IconButton(onClick = goToAbout) {
-                            Icon(
-                                Icons.Outlined.CheckCircle,
-                                contentDescription = "Ir a comercio"
-                            )
-                        }
-                        Text(text = "Comercio")
-                    }
-                }
-            },
-            floatingActionButton = {
-                FloatingActionButton(onClick = goToRegister) {
-                    Icon(
-                        Icons.Outlined.Edit,
-                        contentDescription = "Agregar trabajador o registrar kilos recolectados"
-                    )
-                }
             }
         )
     }
