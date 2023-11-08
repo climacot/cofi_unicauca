@@ -1,12 +1,15 @@
 package com.unicauca.cofi.views.about
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.CheckCircle
@@ -26,7 +29,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.unicauca.cofi.R
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -110,7 +115,43 @@ fun AboutView(
 
 @Composable
 fun Content(paddingValues: PaddingValues) {
+    var textColor = Color(0xFF404944)
+
     Column(
         modifier = Modifier.padding(paddingValues),
-    ) {}
+    ) {
+        Column(
+            modifier = Modifier.padding(horizontal = 32.dp, vertical = 80.dp).fillMaxHeight(),
+            Arrangement.SpaceBetween
+        ){
+            Text(
+                text = "Cofi es una herramienta útil para los dueños de pequeñas fincas cafeteras, que potencia la gestión financiera de su finca, al automatizar los cálculos previamente manuales para los pagos a trabajadores. ",
+                fontSize = 18.sp,
+                fontWeight = FontWeight.Normal,
+                color = textColor,
+                modifier = Modifier.fillMaxWidth()
+            )
+            Column(){
+                Text(
+                    text = "Realizada por:",
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Normal,
+                    color = textColor
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                Text(
+                    text = "Cristian Fernando Narváez Castillo",
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Normal,
+                    color = textColor
+                )
+                Text(
+                    text = "Clímaco Fernando Rodríguez Tovar",
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Normal,
+                    color = textColor
+                )
+            }
+        }
+    }
 }
