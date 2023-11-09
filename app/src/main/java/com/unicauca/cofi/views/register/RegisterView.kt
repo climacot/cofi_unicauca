@@ -48,6 +48,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.google.firebase.firestore.FieldValue
@@ -167,11 +168,11 @@ fun Content(
         ) {
             Column(
                 modifier = Modifier
-                    .background(Color.White)
+                    .background(Color.White, shape = RoundedCornerShape(5.dp))
                     .fillMaxSize(1f)
                     .clip(RoundedCornerShape(5.dp))
                     .border(
-                        border = BorderStroke(1.dp, Color.Black),
+                        border = BorderStroke(1.dp, Color.Transparent),
                         shape = RoundedCornerShape(5.dp)
                     )
             ) {
@@ -207,7 +208,10 @@ fun Content(
                                     onValueChange = { value ->
                                         text = value
                                     },
-                                    keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+                                    keyboardOptions = KeyboardOptions(
+                                        imeAction = ImeAction.Done,
+                                        keyboardType = KeyboardType.Number
+                                    ),
                                     keyboardActions = KeyboardActions(
                                         onDone = {
                                             val newList = listOf<String>(text)
@@ -230,7 +234,6 @@ fun Content(
                                             )
                                         )
                                         .padding(10.dp)
-                                        .clip(RoundedCornerShape(5.dp))
                                 )
                             }
                             Spacer(modifier = Modifier.width(5.dp))
