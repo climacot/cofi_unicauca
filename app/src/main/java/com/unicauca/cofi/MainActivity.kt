@@ -110,7 +110,10 @@ class MainActivity : ComponentActivity() {
 
     private fun updateUI(user: FirebaseUser?) {
         setContent {
-            CofiTheme {
+            CofiTheme(
+                darkTheme = false,
+                dynamicColor = false
+            ) {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background

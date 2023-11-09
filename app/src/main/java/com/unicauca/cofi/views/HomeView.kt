@@ -49,6 +49,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.unicauca.cofi.R
+import com.unicauca.cofi.ui.theme.FontColor
+import com.unicauca.cofi.ui.theme.Purple40
+import com.unicauca.cofi.ui.theme.Purple80
 import kotlinx.coroutines.launch
 
 
@@ -137,10 +140,13 @@ fun HomeView(
                             )
                         ) {
                             Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                                IconButton(onClick = goToHome) {
+                                IconButton(
+                                    onClick = goToHome,
+                                ) {
                                     Icon(
                                         Icons.Outlined.Home,
-                                        contentDescription = "Ir a inicio"
+                                        contentDescription = "Ir a inicio",
+                                        tint = FontColor
                                     )
                                 }
                                 Text(text = "Inicio")
@@ -150,7 +156,8 @@ fun HomeView(
                                 IconButton(onClick = goToFinances) {
                                     Icon(
                                         Icons.Outlined.Info,
-                                        contentDescription = "Ir a finanzas"
+                                        contentDescription = "Ir a finanzas",
+                                        tint = FontColor
                                     )
                                 }
                                 Text(text = "Finanzas")
@@ -159,16 +166,20 @@ fun HomeView(
                             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                                 IconButton(onClick = goToAbout) {
                                     Icon(
-                                        Icons.Outlined.CheckCircle,
-                                        contentDescription = "Ir a comercio"
+                                        Icons.Outlined.Info,
+                                        contentDescription = "Ir a comercio",
+                                        tint = FontColor
                                     )
                                 }
-                                Text(text = "Comercio")
+                                Text(text = "Acerca de")
                             }
                         }
                     },
                     floatingActionButton = {
-                        FloatingActionButton(onClick = goToRegister) {
+                        FloatingActionButton(
+                            onClick = goToRegister,
+                            containerColor = Purple80
+                        ) {
                             Icon(
                                 Icons.Outlined.Edit,
                                 contentDescription = "Agregar trabajador o registrar kilos recolectados"
@@ -209,7 +220,7 @@ fun Content(
                         shape = RoundedCornerShape(5.dp),
                         border = BorderStroke(
                             width = 2.dp,
-                            color = Color.Black
+                            color = Purple40
                         )
                     )
             ) {

@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.CheckCircle
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material3.BottomAppBar
@@ -101,11 +100,11 @@ fun AboutView(
                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
                         IconButton(onClick = goToAbout) {
                             Icon(
-                                Icons.Outlined.CheckCircle,
+                                Icons.Outlined.Info,
                                 contentDescription = "Ir a comercio"
                             )
                         }
-                        Text(text = "Comercio")
+                        Text(text = "Acerca de")
                     }
                 }
             }
@@ -121,9 +120,11 @@ fun Content(paddingValues: PaddingValues) {
         modifier = Modifier.padding(paddingValues),
     ) {
         Column(
-            modifier = Modifier.padding(horizontal = 32.dp, vertical = 80.dp).fillMaxHeight(),
+            modifier = Modifier
+                .padding(horizontal = 32.dp, vertical = 80.dp)
+                .fillMaxHeight(),
             Arrangement.SpaceBetween
-        ){
+        ) {
             Text(
                 text = "Cofi es una herramienta útil para los dueños de pequeñas fincas cafeteras, que potencia la gestión financiera de su finca, al automatizar los cálculos previamente manuales para los pagos a trabajadores. ",
                 fontSize = 18.sp,
@@ -131,7 +132,7 @@ fun Content(paddingValues: PaddingValues) {
                 color = textColor,
                 modifier = Modifier.fillMaxWidth()
             )
-            Column(){
+            Column() {
                 Text(
                     text = "Realizada por:",
                     fontSize = 16.sp,

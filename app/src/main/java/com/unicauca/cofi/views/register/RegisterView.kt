@@ -111,7 +111,10 @@ fun RegisterView(
                     }
                     Spacer(modifier = Modifier.width(5.dp))
                     Button(onClick = {}) {
-                        Text(text = "Guardar")
+                        Text(
+                            text = "Guardar",
+                            color = Color.White
+                        )
                     }
                 }
             }
@@ -251,7 +254,10 @@ fun Content(
                         modifier = Modifier.fillMaxWidth(1f),
                         onClick = {}
                     ) {
-                        Text(text = "Agregar trabajador")
+                        Text(
+                            text = "Agregar trabajador",
+                            color = Color.White
+                        )
                     }
                 }
             }

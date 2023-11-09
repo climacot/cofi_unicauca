@@ -96,11 +96,11 @@ fun FinancasView(
                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
                         IconButton(onClick = goToAbout) {
                             Icon(
-                                Icons.Outlined.CheckCircle,
+                                Icons.Outlined.Info,
                                 contentDescription = "Ir a comercio"
                             )
                         }
-                        Text(text = "Comercio")
+                        Text(text = "Acerca de")
                     }
                 }
             }

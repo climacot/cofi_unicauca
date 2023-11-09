@@ -1,5 +1,6 @@
 package com.unicauca.cofi.views
 
+import android.provider.CalendarContract.Colors
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -35,7 +36,10 @@ fun AccountView(
                 Text(text = user?.displayName ?: "Sin nombre")
                 Spacer(modifier = Modifier.height(10.dp))
                 Button(onClick = onSignOut) {
-                    Text("Cerrar Sesión")
+                    Text(
+                        "Cerrar Sesión",
+                        color = Color.White
+                    )
                 }
             }
         }
